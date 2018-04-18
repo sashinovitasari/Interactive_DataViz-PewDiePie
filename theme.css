@@ -26,10 +26,31 @@ body {
 }
 
 .about{
-	margin-top: 60%;
+	margin-top: 5%;
 	margin-left: 5%;
 	width: 90%;
 	font-size: 11px;
 	font-family: Helvetica;
 	background-color: #d6d8db;
+}
+
+.time_filter{
+	font-size: 15px;
+	font-family: 'Roboto', sans-serif;
+	margin-left: 5%;
+}
+
+.time_filter_sub{
+	font-size: 12px;
+}
+
+.filter_table_name{
+	width: 60%;
+	margin-left: 30%;
+	font-size: 11px;
+}
+
+.filter_table_value{
+	width: 60%;
+	margin-left: 30%;
 }
