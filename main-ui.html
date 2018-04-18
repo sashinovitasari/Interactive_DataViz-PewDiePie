@@ -26,6 +26,9 @@
 					<td width="60%"><b>Data Filter</b></td>
 					<td width="40%">_____________________________</td>
 				</tr>
+
+				<div style="margin-left: 6%;margin-top: 5%; font-size: 13px"><b>Time Period</b></div>
+
 				
 				<div id="start_time" class="time_filter_sub">
 					<br>
@@ -87,25 +90,25 @@
 								
 						<td>
 							<select name="end_year">
-								<option value="2015" selected="selected">2015</option>
+								<option value="2015">2015</option>
 								<option value="2016">2016</option>
-								<option value="2017">2017</option>
+								<option value="2017"  selected="selected">2017</option>
 							</select>
 						</td>
 					</table>
 				</div>
 			</div>
+
 			<div id="category_filter" class= "time_filter">
-				<form action="/action_page.php">
+				<div style="margin-left: 6%;margin-top: 5%; font-size: 13px"><b>Video Category</b></div>
+				<div style="margin-left: 6%; margin-top: 3%;font-size: 12px">
 					<input type="checkbox" name="genre" value="game" checked id="genre_game">Game<br>
 					<input type="checkbox" name="genre" value="comedy" checked id="genre_game">Comedy<br>
 					<input type="checkbox" name="genre" value="blog" checked id="genre_game">Blog & People<br>
 					<input type="checkbox" name="genre" value="ent" checked id="genre_game">Entertainment<br>
-				</form>
+				</div>
 			</div>
-
-
-			<button type="button" onclick="loadPlot()">Apply</button>
+			<button type="button" class="apply" onclick="loadPlot()"><b>SHOW</b></button>
 
 			<script type="text/javascript">
 				function loadPlot() {
@@ -115,25 +118,38 @@
 							document.getElementById("demo").innerHTML = this.responseText;
 						}
 					};
-					//xhttp.open("GET", "theme.css", true);
-					//xhttp.send();
-
-					xhttp.open("GET", "pythoncode.py?text=" + text, true);
-					xhttp.responseType = "JSON";
-					xhr.onload = function(e) {
-					  	var arrOfStrings = JSON.parse(xhr.response);
-					}
-					xhr.send();
+					xhttp.open("GET", "theme.css", true);
+					xhttp.send();
 				}
 			</script>
-
 		</div>
-		<div id = "dataviz">
-			<div id = "mainviz" style="width: 80%;padding-left: 40%;">
-				
+
+		<div id = "dataviz" style="height: 100%; padding-left: 22%; width: 78%">
+			<div id = "mainviz" style="width: 100%;">
+				<table border="1"  width='100%'>
+					<tr>
+						<td height="430" width="70%">
+							<div>
+								MAIN GRAPH
+							</div>
+						</td>
+						<td>
+							<div>
+								SESUATU
+							</div>
+						</td>
+					</tr>
+				</table>
+				<table width='100%' border="1">
+					<tr>
+						<td width='33%'>view</td>
+						<td  width='33%'>likes</td>
+						<td  width='33%'>dislikes</td>
+					</tr>
+				</table>
 				
 				<div class="bk-root">
-				    <div class="bk-plotdiv" id="c2f637c5-2e7a-48e6-968d-a43a96706595"></div>
+				    <div class="bk-plotdiv" name="c2f637c5-2e7a-48e6-968d-a43a96706595"></div>
 				</div>
 
 				<script type="text/javascript">
@@ -176,7 +192,7 @@
 
 
 			</div>
-					<div id="demo">hh</div>
+					<div id="demo"></div>
 	
 		</div>
 	</body>

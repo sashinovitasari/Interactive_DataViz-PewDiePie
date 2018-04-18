@@ -1,5 +1,5 @@
 body {
-	background-color: #000000;
+	/*background-color: #000000;*/
 	font-family: Century Gothic;
 	margin:0 !important;
 	padding: 0 !important;
@@ -53,4 +53,22 @@ body {
 .filter_table_value{
 	width: 60%;
 	margin-left: 30%;
+}
+
+.dropdown_month{
+	position: relative;
+    display: inline-block;
+}
+
+.apply{
+	font-family: Roboto;
+	font-size: 16px;
+	letter-spacing: 2px;
+	color: #FFFFFF;
+	margin-left: 5%;
+	margin-top: 5%;
+	width: 90%;
+	height: 5%;
+	background-color:#f9406f;
+	border: none;
 }
