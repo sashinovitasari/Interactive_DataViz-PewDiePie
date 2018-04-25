@@ -1,0 +1,74 @@
+body {
+	/*background-color: #000000;*/
+	font-family: Century Gothic;
+	margin:0 !important;
+	padding: 0 !important;
+}
+
+.sidebar{
+	position: fixed;
+	background-color: #f5f5f0;
+	width: 22%;
+	height: 100%;
+	display:inline-block;
+	/*margin-left: -10px;
+	margin-top: 60px;*/
+	font-family: Berlin Sans FB Demi;
+}
+
+.grand-title{
+	width: 20%;
+	margin-left: 1%;
+	margin-top: 1%;
+	position: fixed;
+	font-family:Impact;
+	font-size: 40px;
+}
+
+.about{
+	margin-top: 5%;
+	margin-left: 5%;
+	width: 90%;
+	font-size: 11px;
+	font-family: Helvetica;
+	background-color: #d6d8db;
+}
+
+.time_filter{
+	font-size: 15px;
+	font-family: 'Roboto', sans-serif;
+	margin-left: 5%;
+}
+
+.time_filter_sub{
+	font-size: 12px;
+}
+
+.filter_table_name{
+	width: 60%;
+	margin-left: 30%;
+	font-size: 11px;
+}
+
+.filter_table_value{
+	width: 60%;
+	margin-left: 30%;
+}
+
+.dropdown_month{
+	position: relative;
+    display: inline-block;
+}
+
+.apply{
+	font-family: Roboto;
+	font-size: 16px;
+	letter-spacing: 2px;
+	color: #FFFFFF;
+	margin-left: 5%;
+	margin-top: 5%;
+	width: 90%;
+	height: 5%;
+	background-color:#f9406f;
+	border: none;
+}
