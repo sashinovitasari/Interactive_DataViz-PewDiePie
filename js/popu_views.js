@@ -1,6 +1,6 @@
-var marginView = {top:20 , right: 20, bottom: 20, left: 60},
-    		widthView = 300 - marginView.left - marginView.right,
-    		heightView = 115 - marginView.top - marginView.bottom;
+var marginView = {top:15 , right: 10, bottom: 20, left: 120},
+    		widthView = 320 - marginView.left - marginView.right,
+    		heightView = 95 - marginView.top - marginView.bottom;
 
 		var svg_view = d3.select("#popu_views").append("svg")
 			.attr("width", widthView + marginView.left + marginView.right)
@@ -10,8 +10,8 @@ var marginView = {top:20 , right: 20, bottom: 20, left: 60},
 
 start_month = 3
 start_year = 2015
-end_month = 3000
-end_year = 3000
+end_month = 12
+end_year = 2017
 
 function check_validity_view(sm, sy, em, ey,genre,data){
 	if (data.category == genre){
@@ -39,7 +39,6 @@ function count_views(sm, sy, em, ey,genre,data){
 			count+=1
 		}		
 	}
-	console.log(val)
 	return Math.round(val/count)
 }
 
@@ -76,7 +75,6 @@ function update_view_graph(sm, sy, em, ey,genre) {
 			plot_value_view.push(val)
 			plot_color_view.push("#f7bec7")	
 		}
-		console.log(plot_genre_view)
 		max_val = Math.max.apply(Math, plot_value_view)
 		val_order = 1
 
@@ -85,7 +83,8 @@ function update_view_graph(sm, sy, em, ey,genre) {
 		}
 		val_order /=10
 		sym_order = ""
-		max_val = 10000000//(Math.floor(max_val/(val_order))+1)*val_order
+		var arr = [max_val,10000000]
+		max_val = Math.max.apply(Math, arr)
 
 		if (val_order>=1000000) sym_order = 'M'
 		else if (val_order >= 1000) sym_order = "K"
@@ -97,7 +96,7 @@ function update_view_graph(sm, sy, em, ey,genre) {
 		var xAxis_view =  d3.svg.axis()
 			.scale(xScale_view)
 			.ticks(5)
-			.tickFormat(function(d) {return Math.round(d/val_order)+sym_order})
+			.tickFormat(function(d) {return Math.round(d/1000000)+sym_order})
 		    .orient("bottom");
 
 		//VIEW GENRE SCALE
@@ -115,17 +114,24 @@ function update_view_graph(sm, sy, em, ey,genre) {
 			.domain([0,plot_genre_view.length])
 			.range(plot_color_view);
 
-		svg_view.append('g')
-			.attr('class', 'y axis')
-			.call(yAxis_view)
+		var divider = 2
+		if (plot_genre_view.length==4) divider = plot_genre_view.length
+		else if (plot_genre_view.length==4)	divider = 4
 		
+		var he_view = heightView/(plot_genre_view.length)
+
 		svg_view.append('g')
-			.attr('class', 'x axis')
+			.attr('class', 'yView')
+			.call(yAxis_view)
+			.attr('transform', 'translate(-1,-10)')
+
+
+		svg_view.append('g')
+			.attr('class', 'xView')
 			.attr('transform', 'translate(0,'+heightView+')')
 			.call(xAxis_view)
-			.style("font","10px times")
 
-		var he_view = heightView/plot_genre_view.length
+		
 		svg_view.selectAll("rectangle")
 			.data(plot_value_view)
 			.enter()
@@ -137,7 +143,8 @@ function update_view_graph(sm, sy, em, ey,genre) {
 			.attr("height", 10)
 			.attr("x", 0)
 			.attr("y", function(d,i){
-				return (he_view)*i+5
+				if (plot_genre_view.length==1) return he_view/2-13
+				return (he_view)*i+(5*(4-plot_genre_view.length))-7
 			})
 			.style('fill',function(d,i){ return colorScale_view(i); })
 			.append("title")

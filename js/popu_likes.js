@@ -1,22 +1,19 @@
+var marginlike = {top:15 , right: 15, bottom: 20, left: 10},
+    		widthlike = 220 - marginlike.left - marginlike.right,
+    		heightlike = 95 - marginlike.top - marginlike.bottom;
 
+		var svg_like = d3.select("#popu_likes").append("svg")
+			.attr("width", widthlike + marginlike.left + marginlike.right)
+    		.attr("height", heightlike + marginlike.top + marginlike.bottom)
+			.append("g")
+    		.attr("transform", "translate(" + marginlike.left + "," + marginlike.top + ")");
 
-var marginlike = {top:20 , right: 20, bottom: 20, left: 60},
-    widthlike = 300 - marginlike.left - marginlike.right,
-    heightlike = 130 - marginlike.top - marginlike.bottom;
+start_month = 3
+start_year = 2015
+end_month = 12
+end_year = 2017
 
-var svg_like = d3.select("#popu_likes").append("svg")
-	.attr("width", widthlike + marginlike.left + marginlike.right)
-    .attr("height", heightlike + marginlike.top + marginlike.bottom)
-	.append("g")
-    .attr("transform", "translate(" + marginlike.left + "," + marginlike.top + ")");
-
-start_month = 0
-start_year = 0
-end_month = 3000
-end_year = 3000
-genres = ["game","comedy","blog","ent"]
-
-function check_validity_likes(sm, sy, em, ey,genre,data){
+function check_validity_like(sm, sy, em, ey,genre,data){
 	if (data.category == genre){
 		if ((data.year<=ey) && (data.year>=sy)){
 			if ((data.month<=em) && (data.month>=sm)) return 1
@@ -28,7 +25,7 @@ function check_validity_likes(sm, sy, em, ey,genre,data){
 	return 0
 }
 
-function count_likes(start_month, start_year, end_month, end_year,genre,data){
+function count_likes(sm, sy, em, ey,genre,data){
 	//count value based on genre
 	if (genre=="game") genre = "Game"
 	else if (genre=="comedy") genre = "Komedi"
@@ -37,64 +34,62 @@ function count_likes(start_month, start_year, end_month, end_year,genre,data){
 	val = 0
 	count = 0
 	for (var i=0;i<data.length;i++){
-		if (check_validity_likes(start_month, start_year, end_month, end_year,genre,data[i])){
+		if (check_validity_like(sm, sy, em, ey,genre,data[i])){
 			val+= parseInt(data[i].like)
 			count+=1
 		}		
 	}
-
-	console.log(genre)
 	return Math.round(val/count)
 }
 
-function numeric_format(val,order,sym){
-	var res = Math.round(d/val_order_likes)+sym_order_likes
-}
-function update_like_graph(start_month, start_year, end_month, end_year,genre) {
+function update_like_graph(sm, sy, em, ey,genre) {
 	d3.csv("data/popularity.csv", function(datalike){
-		// Get every column value
-		var plot_genre_likes = []
-		var plot_value = []
-		var plot_color = []
+		svg_like.selectAll("*").remove();
+		console.log(genre.indexOf('comedyh'))
+
+		var plot_genre_like = []
+		var plot_value_like = []
+		var plot_color_like = []
 		//count value based on genre
-		if (genre["game"]!='undefined'){
-			var val = count_likes(start_month,start_year,end_month,end_year,"game",datalike)
-			plot_genre_likes.push("Game")
-			plot_value.push(val)
-			plot_color.push("#ee474a")		
+		if (genre.indexOf('game')!=-1){
+			var val = count_likes(sm,sy,em,ey,"game",datalike)
+			plot_genre_like.push("Game")
+			plot_value_like.push(val)
+			plot_color_like.push("#ee474a")		
 		}
-		if (genre["comedy"]!='undefined'){
-			var val = count_likes(start_month,start_year,end_month,end_year,"comedy",datalike)
-			plot_genre_likes.push("Comedy")
-			plot_value.push(val)
-			plot_color.push("#ee5e73")		
+		if (genre.indexOf('comedy')!=-1){
+			var val = count_likes(sm,sy,em,ey,"comedy",datalike)
+			plot_genre_like.push("Comedy")
+			plot_value_like.push(val)
+			plot_color_like.push("#ee5e73")		
 		}
-		if (genre["blog"]!='undefined'){
-			var val = count_likes(start_month,start_year,end_month,end_year,"blog",datalike)
-			plot_genre_likes.push("Blog & People")
-			plot_value.push(val)
-			plot_color.push("#f28b9b")		
+		if (genre.indexOf('blog')!=-1){
+			var val = count_likes(sm,sy,em,ey,"blog",datalike)
+			plot_genre_like.push("Blog & People")
+			plot_value_like.push(val)
+			plot_color_like.push("#f28b9b")		
 		}
-		if (genre["ent"]!='undefined'){
-			var val = count_likes(start_month,start_year,end_month,end_year,"ent",datalike)
-			plot_genre_likes.push("Entertainment")
-			plot_value.push(val)
-			plot_color.push("#f7bec7")	
+		if (genre.indexOf('ent')!=-1){
+			var val = count_likes(sm,sy,em,ey,"ent",datalike)
+			plot_genre_like.push("Entertainment")
+			plot_value_like.push(val)
+			plot_color_like.push("#f7bec7")	
 		}
-		max_val = Math.max.apply(Math, plot_value)
-		val_order_likes = 1
+		max_val = Math.max.apply(Math, plot_value_like)
 
-		while (max_val > val_order_likes){
-			val_order_likes *= 10
+		while (max_val > val_order){
+			val_order *= 10
 		}
-		val_order_likes /=10
-		sym_order_likes = ""
-		max_val = (Math.floor(max_val/(val_order_likes))+1)*val_order_likes
-
-		if (val_order_likes>=1000000) sym_order_likes = 'M'
-		else if (val_order_likes >= 1000) sym_order_likes = "K"
-		
+		val_order /=100
+		sym_order = ""
 		console.log(max_val)
+		var arr = [max_val,500000]
+		max_val = Math.max.apply(Math, arr)
+		console.log(max_val)
+
+
+		if (val_order>=1000000) sym_order = 'M'
+		else if (val_order >= 1000) sym_order = "K"
 		//like VALUE SCALE
 		var xScale_like = d3.scale.linear()
 			.domain([0,max_val])
@@ -103,43 +98,61 @@ function update_like_graph(start_month, start_year, end_month, end_year,genre) {
 		var xAxis_like =  d3.svg.axis()
 			.scale(xScale_like)
 			.ticks(3)
-			.tickFormat(function(d) {return Math.round(d/val_order_likes)+sym_order_likes})
+			.tickFormat(function(d) {return Math.round(d/1000)+sym_order})
 		    .orient("bottom");
 
 		//like GENRE SCALE
 		var yScale_like = d3.scale.ordinal()
-				.domain(plot_genre_likes)
-				.rangeBands([0,heightlike]);
+			.domain(plot_genre_like)
+			.rangeBands([0,heightlike]);
 
 		var yAxis_like = d3.svg.axis()
 			.scale(yScale_like)
 			.orient("left")
 
-		svg_like.append('g')
-			.attr('class', 'y axis')
-			.call(yAxis_like)
+
+
+		//COLOR SCALE
+		var colorScale_like = d3.scale.quantize()
+			.domain([0,plot_genre_like.length])
+			.range(plot_color_like);
+
+		var divider = 2
+		if (plot_genre_like.length==4) divider = plot_genre_like.length
+		else if (plot_genre_like.length==4)	divider = 4
 		
+		var he_like = heightlike/(plot_genre_like.length)
+
 		svg_like.append('g')
-			.attr('class', 'x axis')
+			.attr('class', 'ylike')
+			.call(yAxis_like)
+			.attr('transform', 'translate(-1,-10)')
+
+
+		svg_like.append('g')
+			.attr('class', 'xlike')
 			.attr('transform', 'translate(0,'+heightlike+')')
 			.call(xAxis_like)
 
-		console.log(plot_value)
+		
 		svg_like.selectAll("rectangle")
-			.data(plot_value)
+			.data(plot_value_like)
 			.enter()
 			.append("rect")
 			.attr("class","rectangle")
 			.attr("width", function(d,i){
-				return (plot_value[i]/max_val)*widthlike;
+				return (plot_value_like[i]/max_val)*widthlike;
 			})
-			.attr("height", 15)
+			.attr("height", 10)
 			.attr("x", 0)
 			.attr("y", function(d,i){
-				return (heightlike/plot_genre_likes.length)*i+2
+				if (plot_genre_like.length==1) return he_like/2-13
+				return (he_like)*i+(5*(4-plot_genre_like.length))-7
 			})
+			.style('fill',function(d,i){ return colorScale_like(i); })
 			.append("title")
-			.text(plot_genre_likes);
+			.text(plot_genre_like);
+		
 		
 		function update_like_graph() {
 			return 1
@@ -147,8 +160,8 @@ function update_like_graph(start_month, start_year, end_month, end_year,genre) {
 	});
 }
 
-update_like_graph(start_month, start_year, end_month, end_year,genres);
-
+update_like_graph(start_month, start_year, end_month, end_year,["game","comedy","blog","ent"]);
+/*
 d3.selectAll(".filter").on("change", function(d){
 	svg_like.selectAll("*").remove();
 	console.log('time filter called!');
@@ -163,15 +176,5 @@ d3.selectAll(".filter").on("change", function(d){
 	var end_year = e.options[e.selectedIndex].value;
 
 
-	var e = document.getElementById("start_month");
-	var start_month = e.selectedIndex + 1;
-	var e = document.getElementById("end_month");
-	var end_month = e.selectedIndex + 1;
-	var e = document.getElementById("start_year");
-	var start_year = e.options[e.selectedIndex].value;
-	var e = document.getElementById("end_year");
-	var end_year = e.options[e.selectedIndex].value;
-
-
 	update_like_graph(start_month, start_year, end_month, end_year,genres);
-});
+});*/

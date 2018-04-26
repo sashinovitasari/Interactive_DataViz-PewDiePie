@@ -1,20 +1,20 @@
 body {
 /* test */
 	background-color: #000000;
-	font-family: Century Gothic;
+	font-family: Roboto, Arial, sans-serif;
 	margin:0 !important;
 	padding: 0 !important;
 }
 
 .sidebar{
 	position: fixed;
-	background-color: #f5f5f0;
+	background-color: #f5f5f5;
 	width: 22%;
 	height: 100%;
 	display:inline-block;
 	/*margin-left: -10px;
 	margin-top: 60px;*/
-	font-family: Berlin Sans FB Demi;
+	font-family: Roboto, Arial, sans-serif;
 }
 
 .grand-title{
@@ -27,18 +27,22 @@ body {
 }
 
 .about{
-	margin-top: 5%;
-	margin-left: 5%;
-	width: 90%;
-	font-size: 11px;
-	font-family: Helvetica;
-	background-color: #d6d8db;
+	padding-top: 55%;
+	padding-left: 3%;
+	padding-right: 8%;
+	width: 100%;
+	font-size: 10px;
+	font-family: 'Montserrat', sans-serif;
+	line-height:  15px;
+	background-color: #cccccc;
+	color: #000000;
 }
 
 .time_filter{
 	font-size: 15px;
-	font-family: 'Roboto', sans-serif;
+	font-family: Roboto, Arial, sans-serif;
 	margin-left: 5%;
+	color: #212121;
 }
 
 .time_filter_sub{
@@ -46,14 +50,14 @@ body {
 }
 
 .filter_table_name{
-	width: 60%;
-	margin-left: 30%;
+	width: 80%;
+	margin-left: 5%;
 	font-size: 11px;
 }
 
 .filter_table_value{
-	width: 60%;
-	margin-left: 30%;
+	width: 80%;
+	margin-left: 5%;
 }
 
 .dropdown_month{
@@ -62,7 +66,7 @@ body {
 }
 
 .apply{
-	font-family: Roboto;
+	font-family: 'Montserrat', sans-serif;
 	font-size: 16px;
 	letter-spacing: 2px;
 	color: #FFFFFF;
@@ -72,4 +76,22 @@ body {
 	height: 5%;
 	background-color:#f9406f;
 	border: none;
+}
+
+.grand_popularity{
+	margin-left:7%;
+	font-size: 20px;
+	color: #ffffff;
+	font-family:Impact;
+}
+
+.color_legend{
+	color:  #f5f5f5;
+	margin-left:7%;
+	font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.subgraph_title{
+	font-family: 'Montserrat', sans-serif;
 }

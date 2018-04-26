@@ -6,18 +6,19 @@
 		<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.15.min.css" type="text/css" />
 		<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.15.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="theme.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 		<script src="http://d3js.org/d3.v3.min.js"></script>
 
 	</head>
 	<body>
 		<div class = "sidebar">
 			<div class = "grand-title">PewDiePie's Journey in YouTube</div>
-			<div style="padding-top: 55%; padding-left: 5%;padding-right: 5% "> <hr size ="5px" style="background-color: #000000 "></div>
 			<div>
 				<table class="about">
 					<tr>
 						<td width="40%"><img src="img/photo.png" style="width: 90%;padding-top: 10px;padding-bottom: 10px"></td>
-						<td width="60%">PewDiePie or Felix Kjellberg, started his gaming channel in 2010 and now is the most subcribed channel in YouTube. His journey faced many obstacles as his action as honest and controversial person on the internet.</td>
+						<td width="50%">PewDiePie or Felix Kjellberg, one of most subscribed content creator in YouTube which specializing at gaming and entertainment content.
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -34,13 +35,16 @@
 				
 				<div id="start_time" class="time_filter_sub">
 					<br>
-					<table class="filter_table_name">
-						<td>Month</td>
+					<table style="padding-left: 26%"class="filter_table_name">
+						<td >Month</td>
 						<td>Year</td>
 					</table>
 					<table class="filter_table_value ">
+						<td style="padding-left: 10%" width="30%">
+							<b>Start</b>
+						</td>
 						<td>
-							<select id="start_month" class='filter'>
+							<select id="start_month">
 								<option value="January">January</option>
 								<option value="Febuary">Febuary</option>
 								<option value="March" selected="selected">March</option>
@@ -68,11 +72,14 @@
 
 				<div id="end_time" class="time_filter_sub">
 					
-					<table class="filter_table_name">
+					<table  style="padding-left: 26%"" class="filter_table_name">
 						<td>Month</td>
 						<td>Year</td>
 					</table>
 					<table class="filter_table_value">
+						<td style="padding-left: 10%" width="30%">
+							<b>End</b>
+						</td>
 						<td>
 							<select id="end_month" class='filter'>
 								<option value="January">January</option>
@@ -104,49 +111,52 @@
 			<div id="category_filter" class= "time_filter">
 				<div style="margin-left: 6%;margin-top: 5%; font-size: 13px"><b>Video Category</b></div>
 				<div style="margin-left: 6%; margin-top: 3%;font-size: 12px">
-					<input type="checkbox" name="genre" value="game" checked id="genre_game">Game<br>
-					<input type="checkbox" name="genre" value="comedy" checked id="genre_game">Comedy<br>
-					<input type="checkbox" name="genre" value="blog" checked id="genre_game">Blog & People<br>
-					<input type="checkbox" name="genre" value="ent" checked id="genre_game">Entertainment<br>
+					<input type="checkbox" checked id="genre_game">Game<br>
+					<input type="checkbox" checked id="genre_comedy">Comedy<br>
+					<input type="checkbox" checked id="genre_blog">Blog & People<br>
+					<input type="checkbox" checked id="genre_ent">Entertainment<br>
 				</div>
 			</div>
 			<button type="button" class="apply" onclick="loadPlot()"><b>SHOW</b></button>
 
 			<script type="text/javascript">
 				function loadPlot() {
-					var xhttp = new XMLHttpRequest();
-					xhttp.onreadystatechange = function() {
-						if (this.readyState == 4 && this.status == 200) {
-							document.getElementById("demo").innerHTML = this.responseText;
-						}
-					};
-					xhttp.open("GET", "theme.css", true);
-					xhttp.send();
+						var e = document.getElementById("start_month");
+						var start_month = e.selectedIndex + 1;
+						var e = document.getElementById("end_month");
+						var end_month = e.selectedIndex + 1;
+						var e = document.getElementById("start_year");
+						var start_year = e.options[e.selectedIndex].value;
+						var e = document.getElementById("end_year");
+						var end_year = e.options[e.selectedIndex].value;
+
+						genres = []
+						if (document.getElementById("genre_game").checked==true) genres.push("game")
+						if (document.getElementById("genre_comedy").checked==true) genres.push("comedy")
+						if (document.getElementById("genre_blog").checked==true) genres.push("blog")
+						if (document.getElementById("genre_ent").checked==true) genres.push("ent")
+
+						console.log(genres)
+						update_view_graph(start_month, start_year, end_month, end_year,genres);
+						update_dislike_graph(start_month, start_year, end_month, end_year,genres);
+						update_like_graph(start_month, start_year, end_month, end_year,genres);
+
 				}
 			</script>
 		</div>
 
 		<div id = "dataviz" style="background-color: :#000000; height: 100%; padding-left: 22%; width: 78%">
 			<div id = "mainviz" style="width: 100%;">
-				<table border="1"  width='100%'>
+				<table  width='100%'>
 					<tr>
-						<td height="430" width="100%">
+						<td height="430" width="70%">
 							<div id="main_graph">
 								<!-- MAIN GRAPH -->
 									<script src="js/main_graph.js"></script>
 									<style>
-									
-									.main_graph {
-										    background-color: #1a1a1a;}
-
-									.y2015 {
-										fill: #a2bcc4;
-									}
-									.y2016 {
-										fill: #5d99ad;
-									}
-									.y2017 {
-										fill: #446e9c;
+								
+									.rectangle {
+										fill: steelblue;
 									}
 									.rectangle:hover {
 										fill: orange;
@@ -154,11 +164,11 @@
 									.axis {
 									  font: 10px sans-serif;
 									}
-
+								
 									.axis path,
 									.axis line {
 									  fill: none;
-									  stroke: #333	;
+									  stroke: #000;
 									  shape-rendering: crispEdges;
 									}
 									</style>
@@ -167,11 +177,152 @@
 
 					</tr>
 				</table>
-				<table width='100%' border="1">
+				<table width='100%' style=" padding-left: 1%" >
 					<tr>
-						<td width='33%'>view</td>
-						<td  width='33%'>likes</td>
-						<td  width='33%'>dislikes</td>
+						<td width='20%' >
+							<table>
+								<tr>
+									<div class="grand_popularity">
+										Video Popularity Based on Genre
+									</div>
+								</tr>
+								<tr>
+									<div class="color_legend">
+										<div style="padding-top: 10%;padding-bottom: 5%">
+										Num. Uploaded Video 2015-2017
+										</div>
+											<div style="width:20%;height:3%;float:left; text-align:center; font-size: 11px; display:inline-block;border:0;background: #f7bec7;color: #111111"><b>&nbsp;</b></div>
+											<div style="width:20%;height:3%;float:left; font-size: 11px;display:inline-block;border:0;background: #f28b9b; " > &nbsp;</div>
+											<div style="width:20%;height:3%;float:left; font-size: 11px;display:inline-block;border:0;background: #ee5e73;"> &nbsp;</div>
+											<div style="width:20%;height:3%;float:left; text-align:center; font-size: 11px;display:inline-block;border:0;background: #ee474a;color: #111111" ><b>&nbsp;</b></div>	
+											<br>
+
+											<div style="width:20%;height:3%;float:left; text-align:center; font-size: 10px; display:inline-block;border:0;color: #f4f4f4"><b>Low</b></div>
+											<div style="width:20%;height:3%;float:left; font-size: 11px;display:inline-block;border:0;" > &nbsp;</div>
+											<div style="width:20%;height:3%;float:left; font-size: 11px;display:inline-block;border:0;"> &nbsp;</div>
+											<div style="width:20%;height:3%;float:left; text-align:center; font-size: 10px;display:inline-block;border:0;color: #f4f4f4" ><b>High</b></div>										
+									</div>
+								</tr>
+							</table>
+						</td>
+						<td width='13%' >
+							
+							<div class="subgraph_title" style="color:#cccccc; font-size:13px; padding-left: 1%;
+										margin-right: 10%; padding-top: 6%; margin-top: 9% margin-right: 10%; margin-left: 34%;">
+										<img src="img/view_grey.png" style="width: 8%;">      Average Views</div>
+							<div id="popu_views" style="color:#111111">
+							<!-- POPULARITY GRAPH: VIEW -->
+								
+								<script src="js/popu_views.js"></script>
+								<style>
+									.xView{
+										stroke: #cccccc;
+										font: 10px 'Arial';
+									}
+									.xView  line {
+										  fill: none;
+										  stroke: black;
+										  shape-rendering: auto;
+										}
+
+									.yView{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 11px;
+										letter-spacing: : 20px;
+									}
+
+									.yView path{
+										display: none;
+									}
+									.yView line{
+										stroke: none;
+									}
+
+
+									
+								</style>
+
+							</div>
+						</td>
+						<td  width='15%'>
+							<div class="subgraph_title" style="color:#cccccc; font-size:13px; padding-left: 1%;
+										margin-right: 1%; padding-top: 8.5%; margin-top: 9% margin-right: 10%; margin-left: 3%;">
+										<img src="img/like_grey.png" style="width: 7%;">     Average Likes
+							</div>
+							<div id="popu_likes">
+							<script src="js/popu_likes.js"></script>
+								<style>
+									.xlike{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+
+										
+									}
+									.ylike{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+										letter-spacing: : 20px;
+										display: none;
+									}
+
+									.ylike path{
+										display: none;
+
+									}
+									.ylike line{
+										stroke: none;
+									}
+
+									
+								</style>
+
+							</div>
+
+						</td>
+						<td  width='20%'>
+							<!-- POPULARITY GRAPH: VIEW -->
+								<div class="subgraph_title" style="color:#cccccc; font-size:13px; padding-left: 1%;
+										margin-right: 1%; padding-top: 8%; margin-top: 8% margin-right: 10%; margin-left: 3%;">
+										<img src="img/dislike_grey.png" style="width: 7%;">     Average Dislikes
+							</div>
+							<div id="popu_dislikes">
+							<script src="js/popu_dislikes.js"></script>
+								<style>
+									.xdislike{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+
+										
+									}
+									.ydislike{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+										letter-spacing: : 20px;
+										display: none;
+									}
+
+									.ydislike path{
+										display: none;
+
+									}
+									.ydislike line{
+										stroke: none;
+									}
+
+									
+								</style>
+							</div>
+						</td>
 					</tr>
 				</table>
 				
