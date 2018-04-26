@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.15.min.css" type="text/css" />
+		<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.15.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="theme.css">
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+
+	</head>
+	<body>
+		<div class = "sidebar">
+			<div class = "grand-title">PewDiePie's Journey in YouTube</div>
+			<div>
+				<table class="about">
+					<tr>
+						<td width="40%"><img src="img/photo.png" style="width: 90%;padding-top: 10px;padding-bottom: 10px"></td>
+						<td width="50%">PewDiePie or Felix Kjellberg, one of most subscribed content creator in YouTube which specializing at gaming and entertainment content.
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="time_filter">
+				<br>
+				<tr width="20%">
+					<td width="60%"><b>Data Filter</b></td>
+					<td width="40%">_____________________________</td>
+				</tr>
+
+				<div style="margin-left: 6%;margin-top: 5%; font-size: 13px"><b>Time Period</b></div>
+
+				
+				<div id="start_time" class="time_filter_sub">
+					<br>
+					<table class="filter_table_name">
+						<td>Month</td>
+						<td>Year</td>
+					</table>
+					<table class="filter_table_value ">
+						<td>
+							<select id="start_month">
+								<option value="January">January</option>
+								<option value="Febuary">Febuary</option>
+								<option value="March" selected="selected">March</option>
+								<option value="April">April</option>
+								<option value="May">May</option>
+								<option value="June">June</option>
+								<option value="July">July</option>
+								<option value="August">August</option>
+								<option value="September">September</option>
+								<option value="October">October</option>
+								<option value="November">November</option>
+								<option value="December">December</option>
+							</select>
+						</td>
+								
+						<td>
+							<select id="start_year" class='filter'>
+								<option value="2015" selected="selected">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+							</select>
+						</td>
+					</table>
+				</div>
+
+				<div id="end_time" class="time_filter_sub">
+					
+					<table class="filter_table_name">
+						<td>Month</td>
+						<td>Year</td>
+					</table>
+					<table class="filter_table_value">
+						<td>
+							<select id="end_month" class='filter'>
+								<option value="January">January</option>
+								<option value="Febuary">Febuary</option>
+								<option value="March">March</option>
+								<option value="April">April</option>
+								<option value="May">May</option>
+								<option value="June">June</option>
+								<option value="July">July</option>
+								<option value="August">August</option>
+								<option value="September">September</option>
+								<option value="October">October</option>
+								<option value="November">November</option>
+								<option value="December" selected="selected">December</option>
+							</select>
+						</td>
+								
+						<td>
+							<select id="end_year" class='filter'>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017"  selected="selected">2017</option>
+							</select>
+						</td>
+					</table>
+				</div>
+			</div>
+
+			<div id="category_filter" class= "time_filter">
+				<div style="margin-left: 6%;margin-top: 5%; font-size: 13px"><b>Video Category</b></div>
+				<div style="margin-left: 6%; margin-top: 3%;font-size: 12px">
+					<input type="checkbox" checked id="genre_game">Game<br>
+					<input type="checkbox" checked id="genre_comedy">Comedy<br>
+					<input type="checkbox" checked id="genre_blog">Blog & People<br>
+					<input type="checkbox" checked id="genre_ent">Entertainment<br>
+				</div>
+			</div>
+			<button type="button" class="apply" onclick="loadPlot()"><b>SHOW</b></button>
+
+			<script type="text/javascript">
+				function loadPlot() {
+						var e = document.getElementById("start_month");
+						var start_month = e.selectedIndex + 1;
+						var e = document.getElementById("end_month");
+						var end_month = e.selectedIndex + 1;
+						var e = document.getElementById("start_year");
+						var start_year = e.options[e.selectedIndex].value;
+						var e = document.getElementById("end_year");
+						var end_year = e.options[e.selectedIndex].value;
+
+						genres = []
+						if (document.getElementById("genre_game").checked==true) genres.push("game")
+						if (document.getElementById("genre_comedy").checked==true) genres.push("comedy")
+						if (document.getElementById("genre_blog").checked==true) genres.push("blog")
+						if (document.getElementById("genre_ent").checked==true) genres.push("ent")
+
+						console.log(genres)
+						update_view_graph(start_month, start_year, end_month, end_year,genres);
+				}
+			</script>
+		</div>
+
+		<div id = "dataviz" style="background-color: :#000000; height: 100%; padding-left: 22%; width: 78%">
+			<div id = "mainviz" style="width: 100%;">
+				<table border="1"  width='100%'>
+					<tr>
+						<td height="430" width="70%">
+							<div id="main_graph">
+								<!-- MAIN GRAPH -->
+									<script src="js/main_graph.js"></script>
+									<style>
+								
+									.rectangle {
+										fill: steelblue;
+									}
+									.rectangle:hover {
+										fill: orange;
+									}
+									.axis {
+									  font: 10px sans-serif;
+									}
+								
+									.axis path,
+									.axis line {
+									  fill: none;
+									  stroke: #000;
+									  shape-rendering: crispEdges;
+									}
+									</style>
+							</div>
+						</td>
+
+					</tr>
+				</table>
+				<table width='100%' border="1">
+					<tr>
+						<td width='10%'>
+							<div class="grand_popularity">
+								Video<br>
+								Popularity
+							</div>
+						</td>
+						<td width='10%'>
+							<div class="grand_popularity">
+								Video<br>
+								Popularity
+							</div>
+						</td>
+						<td width='25%'>
+							<div id="popu_views">
+							<!-- POPULARITY GRAPH: VIEW -->
+								<script src="js/popu_views.js"></script>
+							</div>
+						</td>
+						<td  width='25%'>
+							<div id="popu_likes">
+							<!-- POPULARITY GRAPH: VIEW -->
+							</div>
+
+						</td>
+						<td  width='25%'>
+							<div id="popu_dislikes">
+							<!-- POPULARITY GRAPH: VIEW -->
+							</div>
+						</td>
+					</tr>
+				</table>
+				
+				<div class="bk-root">
+				    <div class="bk-plotdiv" name="c2f637c5-2e7a-48e6-968d-a43a96706595"></div>
+				</div>
+			</div>
+					<div id="demo"></div>
+	
+		</div>
+	</body>
+</html>

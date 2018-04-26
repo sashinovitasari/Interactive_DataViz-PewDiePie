@@ -1,0 +1,87 @@
+body {
+/* test */
+	background-color: #000000;
+	font-family: Roboto, Arial, sans-serif;
+	margin:0 !important;
+	padding: 0 !important;
+}
+
+.sidebar{
+	position: fixed;
+	background-color: #f5f5f5;
+	width: 22%;
+	height: 100%;
+	display:inline-block;
+	/*margin-left: -10px;
+	margin-top: 60px;*/
+	font-family: Roboto, Arial, sans-serif;
+}
+
+.grand-title{
+	width: 20%;
+	margin-left: 1%;
+	margin-top: 1%;
+	position: fixed;
+	font-family:Impact;
+	font-size: 40px;
+}
+
+.about{
+	padding-top: 55%;
+	padding-left: 3%;
+	padding-right: 6%;
+	width: 100%;
+	font-size: 12px;
+	font-family: Roboto, Arial, sans-serif;
+	line-height:  15px;
+	background-color: #cccccc;
+	color: #111111;
+}
+
+.time_filter{
+	font-size: 15px;
+	font-family: Roboto, Arial, sans-serif;
+	margin-left: 5%;
+	color: #111111
+}
+
+.time_filter_sub{
+	font-size: 12px;
+}
+
+.filter_table_name{
+	width: 80%;
+	margin-left: 5%;
+	font-size: 11px;
+}
+
+.filter_table_value{
+	width: 80%;
+	margin-left: 5%;
+}
+
+.dropdown_month{
+	position: relative;
+    display: inline-block;
+}
+
+.apply{
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 16px;
+	letter-spacing: 2px;
+	color: #FFFFFF;
+	margin-left: 5%;
+	margin-top: 5%;
+	width: 90%;
+	height: 5%;
+	background-color:#f9406f;
+	border: none;
+}
+
+.grand_popularity{
+	margin-left:10%;
+	font-size: 25px;
+	color: #888888;
+	font-family:Impact;
+
+}
