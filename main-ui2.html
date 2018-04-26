@@ -137,7 +137,7 @@
 
 		<div id = "dataviz" style="background-color: :#000000; height: 100%; padding-left: 22%; width: 78%">
 			<div id = "mainviz" style="width: 100%;">
-				<table border="1"  width='100%'>
+				<table  width='100%'>
 					<tr>
 						<td height="430" width="70%">
 							<div id="main_graph">
@@ -167,24 +167,65 @@
 
 					</tr>
 				</table>
-				<table width='100%' border="1">
+				<table width='100%' >
 					<tr>
-						<td width='10%'>
-							<div class="grand_popularity">
-								Video<br>
-								Popularity
-							</div>
-						</td>
-						<td width='10%'>
-							<div class="grand_popularity">
-								Video<br>
-								Popularity
-							</div>
+						<td width='25%'>
+							<table>
+								<tr>
+									<div class="grand_popularity">
+										Video Popularity
+									</div>
+								</tr>
+								<tr>
+									<div class="color_legend">
+										<p>
+										Number of Uploaded Video 2015-2017
+										</p>
+											<div style="width:25%;padding:1% 0;float:left; text-align:left; font-size: 10px; display:inline-block;border:0;background: #f7bec7;">Low</div>
+											<div style="width:25%;padding:1% 0;float:left; font-size: 10px;display:inline-block;border:0;background: #f28b9b; " >&nbsp;</div>
+											<div style="width:25%;padding:1% 0;float:left; font-size: 10px;display:inline-block;border:0;background: #ee5e73;">&nbsp;</div>
+											<div style="width:25%;padding:1% 0;float:left; text-align:right; font-size: 10px;display:inline-block;border:0;background: #ee474a;" >High</div>
+
+											<!--td width="25%" style="border:0;background: #f7bec7;">Low</td>
+											<td width="25%" style="border:0;background: #f28b9b; " ></td>
+											<td width="25%" style="border:0;background: #ee5e73;"></td>
+											<td width="25%" style="border:0;background: #ee474a;" >High</td-->
+										
+									</div>
+								</tr>
+							</table>
 						</td>
 						<td width='25%'>
 							<div id="popu_views">
 							<!-- POPULARITY GRAPH: VIEW -->
 								<script src="js/popu_views.js"></script>
+								<style>
+									.xView{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+
+										
+									}
+									.yView{
+										stroke: #cccccc;
+										font-family: : Roboto;
+										shape-rendering: crispEdges;
+										font-size: 10px;
+										letter-spacing: : 20px;
+									}
+
+									.yView path{
+										display: none;
+									}
+									.yView line{
+										stroke: none;
+									}
+
+									
+								</style>
+
 							</div>
 						</td>
 						<td  width='25%'>

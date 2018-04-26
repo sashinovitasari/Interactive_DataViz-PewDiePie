@@ -81,7 +81,13 @@ body {
 .grand_popularity{
 	margin-left:10%;
 	font-size: 25px;
-	color: #888888;
+	color: #ffffff;
 	font-family:Impact;
+}
 
+.color_legend{
+	background:  #888888;
+	margin-left:10%;
+	font-size: 13px;
+	font-family: Roboto, Arial, sans-serif;
 }
