@@ -130,14 +130,23 @@
 			<div id = "mainviz" style="width: 100%;">
 				<table border="1"  width='100%'>
 					<tr>
-						<td height="430" width="70%">
+						<td height="430" width="100%">
 							<div id="main_graph">
 								<!-- MAIN GRAPH -->
 									<script src="js/main_graph.js"></script>
 									<style>
-								
-									.rectangle {
-										fill: steelblue;
+									
+									.main_graph {
+										    background-color: #1a1a1a;}
+
+									.y2015 {
+										fill: #a2bcc4;
+									}
+									.y2016 {
+										fill: #5d99ad;
+									}
+									.y2017 {
+										fill: #446e9c;
 									}
 									.rectangle:hover {
 										fill: orange;
@@ -145,11 +154,11 @@
 									.axis {
 									  font: 10px sans-serif;
 									}
-								
+
 									.axis path,
 									.axis line {
 									  fill: none;
-									  stroke: #000;
+									  stroke: #333	;
 									  shape-rendering: crispEdges;
 									}
 									</style>
