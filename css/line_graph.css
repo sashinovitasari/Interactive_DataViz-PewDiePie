@@ -1,0 +1,88 @@
+.hover_info_div {
+	color:white;
+	padding: 10px;
+	width:220px;
+	height:500px;
+}
+
+.detail_text {
+	color:white;
+}
+
+.title_info {
+
+}
+
+.main_graph_svg {
+	background:#262626;
+}
+
+.y2015 {
+	fill: #a2bcc4;
+}
+
+.y2016 {
+	fill: #5d99ad;
+}
+
+.y2017 {
+	fill: #446e9c;
+}
+
+.rectangle:hover {
+	fill: orange;
+}
+
+.axis {
+  font: 10px sans-serif;
+  fill: white;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+  stroke-width: 10px;
+}
+
+.x.axis path {
+  display: none;
+
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 10px;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: steelblue;
+}
+
+.focus text {
+    font-size: 14px;
+}
+
+.tooltip {
+    fill: white;
+    stroke: #000;
+}
+
+.tooltip-date, .tooltip-likes {
+    font-weight: bold;
+}
+
+</style>
+<body>
+	<svg id="svg_line"></svg>
+
+</body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="js/line_graph_2.js"></script>

@@ -1,12 +1,13 @@
 
 
-var margin = {top: 30, right: 30, bottom: 60, left: 60},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var margin = {top: 75, right: 20, bottom: 30, left: 80},
+    width = 930 - margin.left - margin.right,
+    height = 420 - margin.top - margin.bottom;
 
 var svg = d3.select("#main_graph").append("svg")
 	.attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "main_graph_svg")
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -14,6 +15,8 @@ start_month = 0
 start_year = 0
 end_month = 3000
 end_year = 3000
+var x;
+var y;
 
 function update_main_graph(start_month, start_year, end_month, end_year) {
 	// console.log(start_month)
@@ -47,13 +50,14 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 			.filter(function(d){
 				return ((d != "month") & (d != "year"));
 			});
-		var y = d3.scale.linear()
+		y = d3.scale.linear()
 				.domain([0, d3.max(data, function(d){
 					return +d.subscriber_gain
-				})])
+				}) * 1.1])
 				.range([height, 0]);
-		var x = d3.scale.ordinal()
-				.domain(data.map(function(d){ return d.month + " " + d.year;}))
+
+		x = d3.scale.ordinal()
+				.domain(data.map(function(d){ return d.month + " " + d.year.substring(2,4);}))
 				.rangeBands([0, width]);
 
 		var xAxis = d3.svg.axis()
@@ -69,21 +73,34 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 	    	.attr("transform", "translate(0," + height + ")")
 	    	.call(xAxis)
 	    	.selectAll("text")
-	    	.style("font-size", "8px")
+	    	.style("font-size", "10px")
 	      	.style("text-anchor", "end")
-	      	.attr("dx", "-.8em")
-	      	.attr("dy", "-.55em")
-	      	.attr("transform", "rotate(-90)" );
+	      	.attr("dx", "+1em")
+	      	.attr("dy", "+1.05em")
+	      	.attr("transform");
 
 	 	svg.append("g")
 	    	.attr("class", "y axis")
 	    	.call(yAxis);
+
 		svg.selectAll("rectangle")
 			.data(data)
 			.enter()
 			.append("rect")
-			.attr("class","rectangle")
-			.attr("width", width/data.length - 2)
+			.attr("class", function(d){
+				if (d.year == '2015') {
+					return 'rectangle y2015'
+				}
+				if (d.year == '2016') {
+					return 'rectangle y2016'
+				}
+				if (d.year == '2017') {
+					return 'rectangle y2017'
+				}
+
+				return "rectangle"
+			})
+			.attr("width", width/data.length - 4)
 			.attr("height", function(d){
 				return height - y(+d.subscriber_gain);
 			})
@@ -93,10 +110,12 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 			.attr("y", function(d){
 				return y(+d.subscriber_gain);
 			})
+			.on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut)
 			.append("title")
 			.text(function(d){
 				return d.month;
-			});
+			})
 
 		function update_main_graph() {
 			return 1
@@ -105,7 +124,7 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 }
 update_main_graph(start_month, start_year, end_month, end_year);
 
-d3.selectAll(".filter").on("change", function(d){
+d3.selectAll(".filter").on("click", function(d){
 	svg.selectAll("*").remove();
 	console.log('time filter called!');
 
@@ -121,3 +140,78 @@ d3.selectAll(".filter").on("change", function(d){
 
 	update_main_graph(start_month, start_year, end_month, end_year);
 });
+
+// Create Event Handlers for mouse
+
+function handleMouseOver(d) {  // Add interactivity
+	// DETAIL PART
+    var match_event = []
+    x = d3.mouse(this)[0] + 20
+    // y_hover = d3.mouse(this)[1] - 
+	y_hover = y(d.subscriber_gain) - 50
+	d3.tsv('data/event.txt', function(data) {
+		for (id in data) {
+			// console.log(data[id])
+			if (d.year == data[id].year) {
+				if (d.month == data[id].month) {
+					match_event.push(data[id])
+					// console.log(match_event)
+				}
+			}
+		}
+
+		// selecting
+	    detail_text_div = d3.select(".hover_info_div")
+	   	for (id_event in match_event) {
+	   		detail_text_div.append("p").attr("class", "detail_text").text(match_event[id_event].ttitle)
+	   		detail_text_div.append("p").attr("class", "detail_text").text(match_event[id_event].detail)
+	   	}
+	})
+
+	// BOX PART
+    var match_event = []
+    x = d3.mouse(this)[0] + 20
+    // y_hover = d3.mouse(this)[1] - 
+	y_hover = y(d.subscriber_gain) - 50
+
+    var text = svg.append("text")
+    .attr("id", "hover_bar")
+    .attr("fill", "white")
+    .attr("font-size", "15")
+    .attr("x", function(d) {
+    	return x;
+    }).attr("y", function(d) {
+    	return y_hover; // - count_line*20;
+    })
+
+    text.append("tspan").attr("x", x+5).attr("dy","1.2em").text("Month/Year : " + d.month + '-' + d.year)
+    text.append("tspan").attr("x", x+5).attr("dy","1.2em").text("Subcriber gain  : " + d.subscriber_gain)
+    text.append("tspan").attr("x", x+5).attr("dy","1.2em").text("Subcriber total : " + d.subscriber_total)
+
+	var bbox = text.node().getBBox();
+
+	var rect = svg.append("rect")
+	    .attr("id", "hover_bar_box")
+	    .attr("x", bbox.x - 5)
+	    .attr("y", bbox.y - 5)
+	    .attr("width", bbox.width + 10)
+	    .attr("height", bbox.height + 10)
+	    .style("fill", "#000")
+	    .style("fill-opacity", "0.2")
+	    .style("stroke", "#fff")
+	    .style("stroke-width", "1.5px");
+  }
+
+
+
+function handleMouseOut(d) {
+	while (d3.select("#hover_bar").empty() != true) {
+	    d3.select("#hover_bar").remove();  // Remove text location
+	}
+	while (d3.select("#hover_bar_box").empty() != true) {
+	    d3.select("#hover_bar_box").remove();  // Remove text location
+	}
+	while (d3.select(".detail_text").empty() != true) {
+	    d3.select(".detail_text").remove();  // Remove text location
+	}	
+}

@@ -45,7 +45,7 @@ function count_likes(sm, sy, em, ey,genre,data){
 function update_like_graph(sm, sy, em, ey,genre) {
 	d3.csv("data/popularity.csv", function(datalike){
 		svg_like.selectAll("*").remove();
-		console.log(genre.indexOf('comedyh'))
+		// console.log(genre.indexOf('comedyh'))
 
 		var plot_genre_like = []
 		var plot_value_like = []
@@ -82,10 +82,10 @@ function update_like_graph(sm, sy, em, ey,genre) {
 		}
 		val_order /=100
 		sym_order = ""
-		console.log(max_val)
+		// console.log(max_val)
 		var arr = [max_val,500000]
 		max_val = Math.max.apply(Math, arr)
-		console.log(max_val)
+		// console.log(max_val)
 
 
 		if (val_order>=1000000) sym_order = 'M'

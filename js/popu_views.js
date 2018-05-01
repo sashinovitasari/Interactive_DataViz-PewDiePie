@@ -45,7 +45,7 @@ function count_views(sm, sy, em, ey,genre,data){
 function update_view_graph(sm, sy, em, ey,genre) {
 	d3.csv("data/popularity.csv", function(dataview){
 		svg_view.selectAll("*").remove();
-		console.log(genre.indexOf('comedyh'))
+		// console.log(genre.indexOf('comedyh'))
 
 		var plot_genre_view = []
 		var plot_value_view = []

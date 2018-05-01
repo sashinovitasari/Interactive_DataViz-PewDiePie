@@ -1,0 +1,14 @@
+month	year	ttitle	detail
+10	2015	Became first channel to reach 40M subscribers	
+10	2015	Released 'Scare PewDiePie' ep. 1	A YouTube exclusive video series about real life horror games which featured PewDiePie
+10	2015	First  appearence on TV	Appeared on Stephen Colbert's TV show that aired on October 1, 2015
+4	2016	Got award from Time Magazine	Awarded as one of '100 most influental people in the world’
+7	2016	Bug in Youtube	Bug caused PewDiePie to lost his 600K subscribers over a night
+8	2016	Banned from Twitter	Banned from Twitter because he unverified himself due to his dislike to Twitter's system
+9	2016	Released a game	Released a game 'PewDiePie Tuber Simulator' which gained 1 million downloads
+12	2016	'Channel deletion' prank	Promised to delete his channel if it reaches 50M subscibers. When the number reached, he deleted his jokes channel instead of his main channel
+12	2016	Got Ruby Play Button	Became first person to accept Ruby Play Button from YouTube
+1	2017	Released 'Death to All Jews' video	Video meant for joke and criticized due to the title
+2	2017	Disney cut its ties from PewDiePie	Disney-owned Maker Studios cut its ties from PewDiePie  because of 'Death to All Jews' video
+2	2017	YouTube cancelled Scare PewDiePie series	YouTube cancelled the series because of 'Death to All Jews' video
+4	2017	YouTube restrict PewDiePie for video monetization	Policy by YouTube caused PewDiePie to not able to monetize his YouTube video

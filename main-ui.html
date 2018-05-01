@@ -44,7 +44,7 @@
 							<b>Start</b>
 						</td>
 						<td>
-							<select id="start_month">
+							<select id="start_month" class='filter_dropdown'>
 								<option value="January">January</option>
 								<option value="Febuary">Febuary</option>
 								<option value="March" selected="selected">March</option>
@@ -61,7 +61,7 @@
 						</td>
 								
 						<td>
-							<select id="start_year" class='filter'>
+							<select id="start_year" class='filter_dropdown'>
 								<option value="2015" selected="selected">2015</option>
 								<option value="2016">2016</option>
 								<option value="2017">2017</option>
@@ -81,7 +81,7 @@
 							<b>End</b>
 						</td>
 						<td>
-							<select id="end_month" class='filter'>
+							<select id="end_month" class='filter_dropdown'>
 								<option value="January">January</option>
 								<option value="Febuary">Febuary</option>
 								<option value="March">March</option>
@@ -98,7 +98,7 @@
 						</td>
 								
 						<td>
-							<select id="end_year" class='filter'>
+							<select id="end_year" class='filter_dropdown'>
 								<option value="2015">2015</option>
 								<option value="2016">2016</option>
 								<option value="2017"  selected="selected">2017</option>
@@ -113,11 +113,11 @@
 				<div style="margin-left: 6%; margin-top: 3%;font-size: 12px">
 					<input type="checkbox" checked id="genre_game">Game<br>
 					<input type="checkbox" checked id="genre_comedy">Comedy<br>
-					<input type="checkbox" checked id="genre_blog">Blog & People<br>
+					<input type="checkbox" checked id="genre_blog">Blog &amp; People<br>
 					<input type="checkbox" checked id="genre_ent">Entertainment<br>
 				</div>
 			</div>
-			<button type="button" class="apply" onclick="loadPlot()"><b>SHOW</b></button>
+			<button type="button" class="apply filter" onclick="loadPlot()"><b>SHOW</b></button>
 
 			<script type="text/javascript">
 				function loadPlot() {
@@ -145,39 +145,115 @@
 			</script>
 		</div>
 
-		<div id = "dataviz" style="background-color: :#000000; height: 100%; padding-left: 22%; width: 78%">
+		<div id = "dataviz" style="background-color:#000000; height: 100%; padding-left: 22%; width: 78%">
 			<div id = "mainviz" style="width: 100%;">
-				<table  width='100%'>
-					<tr>
-						<td height="430" width="70%">
-							<div id="main_graph">
-								<!-- MAIN GRAPH -->
-									<script src="js/main_graph.js"></script>
-									<style>
-								
-									.rectangle {
-										fill: steelblue;
-									}
-									.rectangle:hover {
-										fill: orange;
-									}
-									.axis {
-									  font: 10px sans-serif;
-									}
-								
-									.axis path,
-									.axis line {
-									  fill: none;
-									  stroke: #000;
-									  shape-rendering: crispEdges;
-									}
-									</style>
-							</div>
-						</td>
+				<style type="text/css">
+					.hover_info_div {
+						color:white;
+						padding: 10px;
+						width:220px;
+						height:500px;
+					}
 
+					.detail_text {
+						color:white;
+					}
+
+					.title_info {
+
+					}
+
+					.main_graph_svg {
+						background:#262626;
+					}
+
+					.y2015 {
+						fill: #a2bcc4;
+					}
+
+					.y2016 {
+						fill: #5d99ad;
+					}
+
+					.y2017 {
+						fill: #446e9c;
+					}
+
+					.rectangle:hover {
+						fill: orange;
+					}
+
+					.axis {
+					  font: 10px sans-serif;
+					  fill: white;
+					}
+
+					.axis path,
+					.axis line {
+					  fill: none;
+					  stroke: #fff;
+					  shape-rendering: crispEdges;
+					  stroke-width: 0.5px;
+					}
+
+					.x.axis path {
+					  display: none;
+
+					}
+
+					.line {
+					  fill: none;
+					  stroke: steelblue;
+					  stroke-width: 2px;
+					}
+
+					.overlay {
+					    fill: none;
+					    pointer-events: all;
+					}
+
+					.focus circle {
+					    fill: steelblue;
+					}
+
+					.focus text {
+					    font-size: 14px;
+					}
+
+					.tooltip {
+					    fill: white;
+					    stroke: #000;
+					}
+
+					.tooltip-date, .tooltip-likes {
+					    font-weight: bold;
+					}
+				</style>				
+				<table  width='100%' border="1">
+					<tr>
+						<td>
+							<table width="0">
+								<div id="main_graph">
+									<script src="js/main_graph.js"></script>
+								</div>
+							</table>
+							<table>
+								<td height="100" style="color:white">
+									<div id="div_line" style="background: black">
+										LINE GRAPH
+										<svg id="svg_line" style="background: black"></svg>
+										<script src="js/line_graph_2.js"></script>
+									</div>
+								</td>
+							</table>
+						</td>
+						<td width="500" style="background: black">
+							<div class="hover_info_div"><p align="center" class="title_info">Info detail</p></div>
+						</td>
 					</tr>
 				</table>
-				<table width='100%' style=" padding-left: 1%" >
+				
+				<table width='100%' style=" padding-left: 1%" border="1">
 					<tr>
 						<td width='20%' >
 							<table>
@@ -238,10 +314,7 @@
 									}
 									.yView line{
 										stroke: none;
-									}
-
-
-									
+									}									
 								</style>
 
 							</div>

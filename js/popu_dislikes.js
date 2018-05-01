@@ -44,16 +44,16 @@ function count_dislikes(sm, sy, em, ey,genre,data){
 			count+=1
 		}		
 	}
-	console.log(val/count)
+	// console.log(val/count)
 	return Math.round(val/count)
 }
 
 function update_dislike_graph(sm, sy, em, ey,genre) {
-	console.log(sm)
-	console.log(em)
+	// console.log(sm)
+	// console.log(em)
 	d3.csv("data/popularity.csv", function(datadislike){
 		svg_dislike.selectAll("*").remove();
-		console.log(genre.indexOf('comedyh'))
+		// console.log(genre.indexOf('comedyh'))
 
 		var plot_genre_dislike = []
 		var plot_value_dislike = []
@@ -91,10 +91,10 @@ function update_dislike_graph(sm, sy, em, ey,genre) {
 		}
 		val_order /=100
 		sym_order = ""
-		console.log(max_val)
+		// console.log(max_val)
 		var arr = [max_val,4000]
 		max_val = Math.max.apply(Math, arr)
-		console.log(max_val)
+		// console.log(max_val)
 
 		if (val_order>=1000000) sym_order = 'M'
 		else if (val_order >= 1000) sym_order = "K"
@@ -152,7 +152,7 @@ function update_dislike_graph(sm, sy, em, ey,genre) {
 			.attr("height", 10)
 			.attr("x", 0)
 			.attr("y", function(d,i){
-				console.log(he_dislike*i)
+				// console.log(he_dislike*i)
 				if (plot_genre_dislike.length==1) return he_dislike/2-13
 				return (he_dislike)*i+(5*(4-plot_genre_dislike.length))-7
 			})
