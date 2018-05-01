@@ -1,6 +1,6 @@
 
 
-var margin = {top: 75, right: 20, bottom: 30, left: 80},
+var margin = {top: 75, right: 20, bottom: 30, left: 40},
     width = 930 - margin.left - margin.right,
     height = 420 - margin.top - margin.bottom;
 
@@ -62,11 +62,34 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 
 		var xAxis = d3.svg.axis()
 			.scale(x)
-		    .orient("bottom");
+		    .orient("bottom")
+		    .tickFormat(function(d) {
+		    	if (d == '3 15') {
+		    		return '2015'
+		    	} 
+		    	if (d == '1 16') {
+		    		return '2016'
+		    	} 
+		    	if (d == '1 17') {
+		    		return '2017'
+		    	} 
+		    	return d.substring(0,2)
+
+			});		    
 
 		var yAxis = d3.svg.axis()
 			.scale(y)
-		    .orient("left");
+		    .orient("left")
+		    .ticks(3)
+		    .tickFormat(function(num) {
+	 			if (num >= 1000000) {
+					return Math.round(num/1000000) + 'M'
+				} 
+				if (num >= 1000) {
+					return Math.round(num/1000) + 'K'
+				}  
+				return num
+			});
 
 		svg.append("g")
 	    	.attr("class", "x axis")
@@ -75,7 +98,21 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 	    	.selectAll("text")
 	    	.style("font-size", "10px")
 	      	.style("text-anchor", "end")
-	      	.attr("dx", "+1em")
+	      	.attr("dx", function(d) {
+		    	if (d == '3 15') {
+		      		return "+1em"
+		    	} 
+		    	if (d == '1 16') {
+		      		return "+1em"
+		    	} 
+		    	if (d == '1 17') {
+	    	  		return "+1.1em"
+		    	} 
+		    	if ((d.substring(0,2) == '10') || (d.substring(0,2) == '11') || (d.substring(0,2) == '12')) {
+		    		return "0.4em"
+		    	}
+	      		return "+0.2em"
+	      	})
 	      	.attr("dy", "+1.05em")
 	      	.attr("transform");
 

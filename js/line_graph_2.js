@@ -1,5 +1,5 @@
 
-var margin_line = {top: 0, right: 00, bottom: 30, left: 80},
+var margin_line = {top: 10, right: 20, bottom: 25, left: 40},
 	 width_line = 930 - margin_line.left - margin_line.right,
 	 height_line = 100 - margin_line.top - margin_line.bottom;
 
@@ -22,11 +22,44 @@ var color = d3.scale.category10();
 
 var xAxis_line = d3.svg.axis()
 	 .scale(x_line)
-	 .orient("bottom");
+	 .orient("bottom")
+	 .tickFormat(function(d) {
+	 	console.log(d)
+	 	if (d.getMonth() + 1 == 1) {
+	 		return d.getFullYear();
+	 	}
+ 		if ((d.getMonth() + 1 == 3) && d.getFullYear() == 2015) {
+ 			return d.getFullYear();
+ 		}
+	 	return d.getMonth() + 1;
+	 });
+
+console.log(xAxis_line)
+
+function formatYLabel(num) {
+	if (num >= 1000000) {
+		return Math.round(d/1000000) + 'M'
+	} 
+	if (num >= 1000) {
+		return Math.round(d/1000) + 'K'
+	}  
+
+	return num
+}
 
 var yAxis_line = d3.svg.axis()
 	 .scale(y_line)
-	 .orient("left");
+	 .orient("left")
+	 .tickFormat(function(num) {
+	 		if (num >= 1000000) {
+				return Math.round(num/1000000) + 'M'
+			} 
+			if (num >= 1000) {
+				return Math.round(num/1000) + 'K'
+			}  
+			return num
+		})
+	 .ticks(3);
 
 var line = d3.svg.line()
 	 .interpolate("basis")
@@ -40,7 +73,7 @@ var svg_line = d3.select("#svg_line")
 	 .attr("transform", "translate(" + margin_line.left + "," + margin_line.top + ")");
 
 d3.csv("like_dislike.csv", function(error, data) {
-  console.log(data)
+  // console.log(data)
   if (error) throw error;
 
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
@@ -58,7 +91,7 @@ d3.csv("like_dislike.csv", function(error, data) {
 	 };
   });
 
-	x_line.domain(data.map(function(d){ console.log(d) ; return d.date}))
+	x_line.domain(data.map(function(d){ return d.date}))
 
   y_line.domain([
 	 d3.min(aspect, function(c) { return d3.min(c.values, function(v) { return v.likes; }); }),
@@ -90,7 +123,7 @@ d3.csv("like_dislike.csv", function(error, data) {
 		.attr("d", function(d) { return line(d.values); })
 		.style("stroke", function(d) { return color(d.name); });
 
-		  console.log("A")
+		  // console.log("A")
   // Text part
   aspect.append("text")
 		.datum(function(d) { console.log(d) ;return {name: d.name, value: d.values[d.values.length - 1]}; })
@@ -101,54 +134,55 @@ d3.csv("like_dislike.csv", function(error, data) {
 
   // // 
 
-  // var focus = svg_line.append("g")
-		// 		.attr("class", "focus")
-		// 		.style("display", "none");
+  var focus = svg_line.append("g")
+				.attr("class", "focus")
+				.style("display", "none");
 
-		//   focus.append("circle")
-		// 		.attr("r", 5);
+		  focus.append("circle")
+				.attr("r", 5);
 
-		//   focus.append("rect")
-		// 		.attr("class", "tooltip")
-		// 		.attr("width", 100)
-		// 		.attr("height", 50)
-		// 		.attr("x", 10)
-		// 		.attr("y", -22)
-		// 		.attr("rx", 4)
-		// 		.attr("ry", 4);
+		  focus.append("rect")
+				.attr("class", "tooltip")
+				.attr("width", 100)
+				.attr("height", 50)
+				.attr("x", 10)
+				.attr("y", -22)
+				.attr("rx", 4)
+				.attr("ry", 4);
 
-		//   focus.append("text")
-		// 		.attr("class", "tooltip-date")
-		// 		.attr("x", 18)
-		// 		.attr("y", -2);
+		  focus.append("text")
+				.attr("class", "tooltip-date")
+				.attr("x", 18)
+				.attr("y", -2);
 
-		//   focus.append("text")
-		// 		.attr("x", 18)
-		// 		.attr("y", 18)
-		// 		.text("Likes:");
+		  focus.append("text")
+				.attr("x", 18)
+				.attr("y", 18)
+				.text("Likes:");
 
-		//   focus.append("text")
-		// 		.attr("class", "tooltip-likes")
-		// 		.attr("x", 60)
-		// 		.attr("y", 18);
+		  focus.append("text")
+				.attr("class", "tooltip-likes")
+				.attr("x", 60)
+				.attr("y", 18);
 
-		//   svg_line.append("rect")
-		// 		.attr("class", "overlay")
-		// 		.attr("width", width_line)
-		// 		.attr("height", height_line)
-		// 		.on("mouseover", function() { focus.style("display", null); })
-		// 		.on("mouseout", function() { focus.style("display", "none"); })
-		// 		.on("mousemove", mousemove);
+		  svg_line.append("rect")
+				.attr("class", "overlay")
+				.attr("width", width_line)
+				.attr("height", height_line)
+				.on("mouseover", function() { focus.style("display", null); })
+				.on("mouseout", function() { focus.style("display", "none"); })
+				.on("mousemove", mousemove);
 
-		//   function mousemove() {
-		// 		var x0 = x_line.invert(d3.mouse(this)[0]),
-		// 			 i = bisectDate(data, x0, 1),
-		// 			 d0 = data[i - 1],
-		// 			 d1 = data[i],
-		// 			 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-		// 		console.log(d)
-		// 		focus.attr("transform", "translate(" + x_line(d.date) + "," + x_line(d.like) + ")");
-		// 		focus.select(".tooltip-date").text(dateFormatter(d.date));
-		// 		focus.select(".tooltip-likes").text(formatValue(d.like));
-		//   }
+		  function mousemove() {
+		  		x_line.invert(1)
+				var x0 = x_line.invert(d3.mouse(this)[0]),
+					 i = bisectDate(data, x0, 1),
+					 d0 = data[i - 1],
+					 d1 = data[i],
+					 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+				console.log(d)
+				focus.attr("transform", "translate(" + x_line(d.date) + "," + x_line(d.like) + ")");
+				focus.select(".tooltip-date").text(dateFormatter(d.date));
+				focus.select(".tooltip-likes").text(formatValue(d.like));
+		  }
 });
