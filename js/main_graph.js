@@ -1,8 +1,8 @@
 
 
-var margin = {top: 75, right: 20, bottom: 30, left: 40},
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 930 - margin.left - margin.right,
-    height = 420 - margin.top - margin.bottom;
+    height = 360 - margin.top - margin.bottom;
 
 var svg = d3.select("#main_graph").append("svg")
 	.attr("width", width + margin.left + margin.right)
@@ -10,6 +10,10 @@ var svg = d3.select("#main_graph").append("svg")
     .attr("class", "main_graph_svg")
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 start_month = 0
 start_year = 0
@@ -134,7 +138,6 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 				if (d.year == '2017') {
 					return 'rectangle y2017'
 				}
-
 				return "rectangle"
 			})
 			.attr("width", width/data.length - 4)
@@ -181,6 +184,19 @@ d3.selectAll(".filter").on("click", function(d){
 // Create Event Handlers for mouse
 
 function handleMouseOver(d) {  // Add interactivity
+	// while (d3.select(".detail_text_title").empty() != true) {
+	//     d3.select(".detail_text_title").remove();  // Remove text location
+	// }
+	// while (d3.select(".detail_text_sentence").empty() != true) {
+	//     d3.select(".detail_text_sentence").remove();  // Remove text location
+	// }
+	while (d3.select(".detail_text_no_event").empty() != true) {
+	    d3.select(".detail_text_no_event").remove();  // Remove text location
+	}
+	while (d3.select(".detail_div").empty() != true) {
+	    d3.select(".detail_div").remove();  // Remove text location
+	}
+
 	// DETAIL PART
     var match_event = []
     x = d3.mouse(this)[0] + 20
@@ -198,10 +214,19 @@ function handleMouseOver(d) {  // Add interactivity
 		}
 
 		// selecting
-	    detail_text_div = d3.select(".hover_info_div")
+	    detail_text_div = d3.select(".hover_info_div").append("div").attr("class", "detail_div")
+
+	    console.log("AAA" )
+
+	    detail_text_div.append("p").attr("class", "month_year_name").text(monthNames[parseInt(d.month)-1] + ' ' + d.year)
+
+   		detail_text_div.append("ol")
 	   	for (id_event in match_event) {
-	   		detail_text_div.append("p").attr("class", "detail_text").text(match_event[id_event].ttitle)
-	   		detail_text_div.append("p").attr("class", "detail_text").text(match_event[id_event].detail)
+	   		detail_text_div.append("li").attr("class", "detail_text_title").text(match_event[id_event].ttitle)
+	   		detail_text_div.append("p").attr("class", "detail_text_sentence").text(match_event[id_event].detail)
+	   	}
+	   	if (d3.select(".detail_text_sentence").empty()) {
+	   		detail_text_div.append("p").attr("class", "detail_text_no_event").text("No special event in this month")
 	   	}
 	})
 
@@ -248,7 +273,5 @@ function handleMouseOut(d) {
 	while (d3.select("#hover_bar_box").empty() != true) {
 	    d3.select("#hover_bar_box").remove();  // Remove text location
 	}
-	while (d3.select(".detail_text").empty() != true) {
-	    d3.select(".detail_text").remove();  // Remove text location
-	}	
+
 }

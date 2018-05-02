@@ -153,6 +153,7 @@
 						padding: 10px;
 						width:220px;
 						height:500px;
+						font-family: verdana;	
 					}
 
 					.detail_text {
@@ -228,27 +229,86 @@
 					.tooltip-date, .tooltip-likes {
 					    font-weight: bold;
 					}
+
+					.month_year_name {
+						font-size: 15px;
+						font: bold;
+						align-items: center;
+					}
+
+					.detail_text_title {
+						font-size: 15px;
+						font: bold;
+					}
+
+					.detail_text_sentence {
+						font-size: 14px;
+						font: bold;
+					}
+
+					.detail_text_no_event {
+						font-size: 15px;
+						font: bold;
+					}
+
+					.title_info {
+						font-size: 20px;
+						font: bold;
+					}
+
+					.detail_div {
+						background: #262626;
+					    padding-top: 5px;
+					    padding-right: 15px;
+					    padding-bottom: 10px;
+					    padding-left: 15px;
+					    margin: 5px;
+					}
+
+					.filter_dropdown {
+						font-family: verdana;
+					}
+
+					.main_graph_header {
+						font-size: 18px;
+						font-family: verdana;
+						margin-left: 40px; 
+						margin-bottom: 0px; 
+						margin-top: 10px;
+						padding-top: 0px;
+						color:white;
+					}
+
 				</style>				
 				<table  width='100%' border="1">
 					<tr>
 						<td>
 							<table width="0">
-								<div id="main_graph">
+								<div id="main_graph" style="background-color: #262626; ">
+									<div class="main_graph_header">
+										<h><i>Subscriber gain/month</i></h>
+									</div>
+									
+
 									<script src="js/main_graph.js"></script>
 								</div>
 							</table>
 							<table>
 								<td height="100" style="color:white">
-									<div id="div_line" style="background: black">
-										LINE GRAPH
-										<svg id="svg_line" style="background: black"></svg>
+									<div id="div_line" style="background: black; font-family:verdana;">
+										<p style="margin-left: 40px; margin-bottom: 0px; margin-top: 5px;"><i>Like-Dislike/Month</i></p>
+										<svg id="svg_line" ></svg>
 										<script src="js/line_graph_2.js"></script>
 									</div>
 								</td>
 							</table>
 						</td>
 						<td width="500" style="background: black">
-							<div class="hover_info_div"><p align="center" class="title_info">Info detail</p></div>
+							<div class="hover_info_div"><p align="center" class="title_info"><font face="verdana">Info detail</font></p>
+								<p class="detail_text_no_event">
+									Hover to bar chart to see details.
+								</p>
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -258,7 +318,7 @@
 						<td width='20%' >
 							<table>
 								<tr>
-									<div class="grand_popularity">
+									<div class="grand_popularity" style="font-family: verdana">
 										Video Popularity Based on Genre
 									</div>
 								</tr>

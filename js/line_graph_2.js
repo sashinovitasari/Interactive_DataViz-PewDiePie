@@ -1,7 +1,7 @@
 
-var margin_line = {top: 10, right: 20, bottom: 25, left: 40},
+var margin_line = {top: 10, right: 20, bottom: 20, left: 40},
 	 width_line = 930 - margin_line.left - margin_line.right,
-	 height_line = 100 - margin_line.top - margin_line.bottom;
+	 height_line = 75 - margin_line.top - margin_line.bottom;
 
 var parseDate = d3.time.format("%Y-%m").parse;
 
@@ -111,7 +111,7 @@ d3.csv("like_dislike.csv", function(error, data) {
 		.attr("y", 6)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Cases");
+		.text("Amount");
 
   var aspect = svg_line.selectAll(".city")
 		.data(aspect)
@@ -141,48 +141,48 @@ d3.csv("like_dislike.csv", function(error, data) {
 		  focus.append("circle")
 				.attr("r", 5);
 
-		  focus.append("rect")
-				.attr("class", "tooltip")
-				.attr("width", 100)
-				.attr("height", 50)
-				.attr("x", 10)
-				.attr("y", -22)
-				.attr("rx", 4)
-				.attr("ry", 4);
+		//   focus.append("rect")
+		// 		.attr("class", "tooltip")
+		// 		.attr("width", 100)
+		// 		.attr("height", 50)
+		// 		.attr("x", 10)
+		// 		.attr("y", -22)
+		// 		.attr("rx", 4)
+		// 		.attr("ry", 4);
 
-		  focus.append("text")
-				.attr("class", "tooltip-date")
-				.attr("x", 18)
-				.attr("y", -2);
+		//   focus.append("text")
+		// 		.attr("class", "tooltip-date")
+		// 		.attr("x", 18)
+		// 		.attr("y", -2);
 
-		  focus.append("text")
-				.attr("x", 18)
-				.attr("y", 18)
-				.text("Likes:");
+		//   focus.append("text")
+		// 		.attr("x", 18)
+		// 		.attr("y", 18)
+		// 		.text("Likes:");
 
-		  focus.append("text")
-				.attr("class", "tooltip-likes")
-				.attr("x", 60)
-				.attr("y", 18);
+		//   focus.append("text")
+		// 		.attr("class", "tooltip-likes")
+		// 		.attr("x", 60)
+		// 		.attr("y", 18);
 
-		  svg_line.append("rect")
-				.attr("class", "overlay")
-				.attr("width", width_line)
-				.attr("height", height_line)
-				.on("mouseover", function() { focus.style("display", null); })
-				.on("mouseout", function() { focus.style("display", "none"); })
-				.on("mousemove", mousemove);
+		//   svg_line.append("rect")
+		// 		.attr("class", "overlay")
+		// 		.attr("width", width_line)
+		// 		.attr("height", height_line)
+		// 		.on("mouseover", function() { focus.style("display", null); })
+		// 		.on("mouseout", function() { focus.style("display", "none"); })
+		// 		.on("mousemove", mousemove);
 
-		  function mousemove() {
-		  		x_line.invert(1)
-				var x0 = x_line.invert(d3.mouse(this)[0]),
-					 i = bisectDate(data, x0, 1),
-					 d0 = data[i - 1],
-					 d1 = data[i],
-					 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-				console.log(d)
-				focus.attr("transform", "translate(" + x_line(d.date) + "," + x_line(d.like) + ")");
-				focus.select(".tooltip-date").text(dateFormatter(d.date));
-				focus.select(".tooltip-likes").text(formatValue(d.like));
-		  }
+		//   function mousemove() {
+		//   		x_line.invert(1)
+		// 		var x0 = x_line.invert(d3.mouse(this)[0]),
+		// 			 i = bisectDate(data, x0, 1),
+		// 			 d0 = data[i - 1],
+		// 			 d1 = data[i],
+		// 			 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+		// 		console.log(d)
+		// 		focus.attr("transform", "translate(" + x_line(d.date) + "," + x_line(d.like) + ")");
+		// 		focus.select(".tooltip-date").text(dateFormatter(d.date));
+		// 		focus.select(".tooltip-likes").text(formatValue(d.like));
+		//   }
 });
