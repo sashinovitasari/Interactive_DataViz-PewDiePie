@@ -221,9 +221,12 @@ function handleMouseOver(d) {  // Add interactivity
 	    detail_text_div.append("p").attr("class", "month_year_name").text(monthNames[parseInt(d.month)-1] + ' ' + d.year)
 
    		detail_text_div.append("ol")
+   		id_show = 1
 	   	for (id_event in match_event) {
-	   		detail_text_div.append("li").attr("class", "detail_text_title").text(match_event[id_event].ttitle)
-	   		detail_text_div.append("p").attr("class", "detail_text_sentence").text(match_event[id_event].detail)
+	   		detail_text_div.append("b").attr("class", "detail_text_title").text(id_show+". "+match_event[id_event].ttitle)
+	   		detail_text_div.append("div").attr("class", "detail_text_sentence").text(match_event[id_event].detail)
+	   		detail_text_div.append("br")
+	   		id_show+=1
 	   	}
 	   	if (d3.select(".detail_text_sentence").empty()) {
 	   		detail_text_div.append("p").attr("class", "detail_text_no_event").text("No special event in this month")
