@@ -124,6 +124,12 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 	    	.attr("class", "y axis")
 	    	.call(yAxis);
 
+
+	    var DD = 0; //(34 - data.length)*0.8
+
+	    // var DD = 0;
+
+
 		svg.selectAll("rectangle")
 			.data(data)
 			.enter()
@@ -140,12 +146,14 @@ function update_main_graph(start_month, start_year, end_month, end_year) {
 				}
 				return "rectangle"
 			})
-			.attr("width", width/data.length - 4)
+			.attr("width", function(d, i) {
+				// (15 + data.length*0.8)
+				return (width/data.length - 4) - DD*3})
 			.attr("height", function(d){
 				return height - y(+d.subscriber_gain);
 			})
 			.attr("x", function(d, i){
-				return (width / data.length) * i + 4;
+				return (width / data.length) * i + 4 + DD;
 			})
 			.attr("y", function(d){
 				return y(+d.subscriber_gain);
@@ -178,7 +186,7 @@ d3.selectAll(".filter").on("click", function(d){
 	var end_year = e.options[e.selectedIndex].value;
 
 
-	update_main_graph(start_month, start_year, end_month, end_year);
+	// update_main_graph(start_month, start_year, end_month, end_year);
 });
 
 // Create Event Handlers for mouse
